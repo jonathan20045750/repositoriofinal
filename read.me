@@ -1,0 +1,64 @@
+ Profesor: 
+	Edison Cuevas
+
+Integrantes: 
+	Jorge Antonio Nicoya
+	Everth Antonio Pinell
+	Jonathan Bravo Pérez 
+	Dany Udiel Pérez 
+	Joel David Pérez
+                      
+                      
+
+Fecha de entrega : 21 / 06 / 2023
+1.	Objetivos. 
+	Desplegar un sitio de Wordpress sobre Wordpress CentOS 8.5 para complementar los conocimientos adquiridos en la asignatura de practicas de especialización. 
+	Utilizar las herramientas y conocimientos adquiridos en cloud computing para desplegar el sitio haciendo uso de un grupo de recurso, vnet
+
+
+
+2.	Conceptos Básicos. 
+A.	Que es una maquina virtual. 
+Una máquina virtual (VM) es un entorno virtual que funciona como sistema informático virtual con su propia CPU, memoria, interfaz de red y almacenamiento, pero se crea en un sistema de hardware físico, ya sea en las instalaciones o no.
+En general, hay dos tipos de máquinas virtuales: máquinas virtuales de procesos y de sistemas. 
+Una máquina virtual de procesos, también conocida como MV de aplicación o entorno de tiempo de ejecución gestionado (MRE) es una plataforma virtual utilizada para ejecutar un solo proceso como aplicación en una máquina host. Una vez terminado el proceso, se destruye la máquina virtual. 
+Una máquina virtual de sistema brinda un sistema completo, así que funciona como un sistema de hardware. Cada máquina virtual de sistema puede ejecutar su propio SO y múltiples aplicaciones en él. Este tipo de sistema requiere el uso de un hipervisor para acceder a los recursos de hardware de la máquina host.
+B.	Que es una Vnet.  
+Azure Virtual Network (VNet) es el bloque de creación fundamental de una red privada en Azure. VNet permite muchos tipos de recursos de Azure, como Azure Virtual Machines (máquinas virtuales), para comunicarse de forma segura entre usuarios, con Internet y con las redes locales.
+Una red virtual de Azure permite que los recursos de Azure se comuniquen de forma segura entre ellos, con Internet y con redes locales. Entre los escenarios clave que se pueden realizar con una red virtual se incluyen los siguientes: la comunicación de los recursos de Azure con Internet, la comunicación entre los recursos de Azure, la comunicación con los recursos locales, el filtrado del tráfico de red, el enrutamiento del tráfico de red y la integración con los servicios de Azure.
+C.	Que es subnet
+Es un rango de direcciones lógica usada para maximizar el espacio de direcciones IPv4. Permiten asignar parte del espacio de la dirección host a las direcciones de red, lo que hace posible que se tengan más redes. 
+
+El Subneteo permite una mejor administración, control del tráfico y seguridad l segmentar la red por función. También, mejora la performance de la red al reducir el tráfico de broadcast de nuestra red. Como desventaja, su implementación desperdicia muchas direcciones, sobre todo en los enlaces seriales entre routers. 
+D.	PowerShell. 
+PowerShell ISE es una aplicación para ejecutar, probar y depurar scripts de PowerShell. La aplicación forma parte de Windows Management Framework, un conjunto de herramientas para administrar diferentes versiones de Windows. Además, incluye muchas funciones para que los usuarios escriban scripts sin errores.
+3.	Desarrollo
+Para desplegar el sitio Wordpress se necesitan ejecutar los siguientes comandos. Cabe recalcar que debido a los costos del servicio y la capacidad de las cuentas de estudiantes, para la parte practica se hizo uso de otra versión de Wordpress
+4.	Conclusión. 
+Para concluir este trabajo, se ha logrado completar con éxito la tarra asignada, a pesar de las dificultades tenidas en la realización de la practica, a través de la investigación y la persistencia se logro completar el trabajo. Esta ha sido una experiencia constructiva que ha ampliado los conocimientos del perfil profesional de la carrera. 
+
+
+#script del procedimiento
+Script  Desplegar un sitio con wordpress sobre Wordpress-on-CentOS-8.5 Linux Operating System
+
+#Crear grupo de recursos
+az group create --name group6 --location eastus
+
+#creamos la primera Vnet
+az network vnet create --name vnet6  --resource-group group6 --address-prefix 10.0.0.0/16 --subnet-name subnet6 --subnet-prefixes 10.0.0.0/24
+
+#creamos la subnet
+az network vnet subnet create --name Subnet1 --resource-group group6 --vnet-name vnet6 --address-prefix 10.0.1.0/26
+
+#creamos public-ip
+az network public-ip create --resource-group group6 --name public-ip --sku Standard --location eastus2 --zone 1 2 3
+
+#creamos la maquina virtual, asociamos la Vnet y con una autentificacion de tipo ssh
+az vm create  --resource-group group6 --name jorgenicoyaVM --image nilespartnersinc1617691698386:wordpress-5-7_09-04-2021:wordpress:1.1.1 --size Standard_DS1_v2 --authentication-type ssh --generate-ssh-keys --admin-username  jorgevm
+
+#Se utiliza para abrir un puerto específico en una máquina virtual (VM) en Azure.
+az vm open-port --resource-group group6 --name team6 --port 80
+
+
+
+                                     

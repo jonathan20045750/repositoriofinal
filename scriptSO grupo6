@@ -1,0 +1,4 @@
+az group create --name group6 --location eastus2
+az network vnet create --name vnet6  --resource-group group6 --address-prefix 10.0.0.0/16 --subnet-name subnet6 --subnet-prefixes 10.0.0.0/24
+az network vnet subnet create --name Subnet1 --resource-group group6 --vnet-name vnet6 --address-prefix 10.0.1.0/26
+az network public-ip create --resource-group group6 --name public-ip --sku Standard --location eastus2 --zone 1 2 3
